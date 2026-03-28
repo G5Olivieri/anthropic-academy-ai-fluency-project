@@ -183,9 +183,10 @@
 
   .new-problem {
     margin: 2rem 0 0; padding: 0.9rem 1.2rem;
-    border: 1px dashed var(--green-muted);
-    color: var(--muted); font-size: 0.78rem;
+    border: 1px dashed var(--amber);
+    color: #c8e6c8; font-size: 0.78rem;
     letter-spacing: 0.05em; position: relative;
+    background: rgba(255,176,0,0.04);
   }
   .new-problem::before {
     content: 'NEW PROBLEM UNLOCKED';
@@ -237,7 +238,6 @@ spokes = 8
 rings = 5
 spoke_length = 150
 
-# draw spokes
 for i in range(spokes):
     angle = math.radians(360 / spokes * i)
     t.penup()
@@ -246,7 +246,6 @@ for i in range(spokes):
     t.goto(cx + spoke_length * math.cos(angle),
            cy + spoke_length * math.sin(angle))
 
-# draw rings
 for r in range(1, rings + 1):
     dist = spoke_length / rings * r
     points = []
@@ -292,10 +291,38 @@ turtle.done()</pre>
   <section>
     <div class="section-header">
       <span class="level">STAGE_02 //</span>
-      <h2>THE UNIVERSAL LANGUAGE</h2>
+      <h2>THE ADDRESS</h2>
     </div>
 
-    <p>The answer was HTML. Not a programming language — a <strong>markup language</strong>. A system of meaning applied to text. An <code>&lt;h1&gt;</code> does not say "make this big." It says <em>"this is the most important heading in this document."</em> The appearance is secondary. The meaning is primary. This distinction will matter later. File it away.</p>
+    <p>Humans have always linked ideas. A footnote is a link. A bibliography is a link. An index card pointing to another card is a link. Knowledge does not exist in isolation — it exists in relation to other knowledge. The problem at CERN was not that documents were unreadable. It was that they were <em>unconnected.</em> A physicist's work could not reference a colleague's work. The first problem was not how to write a document. It was <strong>how to link it.</strong></p>
+
+    <p>The answer was the URL — Uniform Resource Locator. A universal addressing system. Every document on every machine gets a unique, human-readable address. Not a file path tied to one operating system. Not an internal identifier only one machine understands. A globally unique address that any machine on the network can resolve — and that any document can reference.</p>
+
+    <pre data-lang="url"><code><span class="cmt"># before: a file trapped on one machine</span>
+<span class="muted">/usr/cern/tbl/documents/proposal.txt</span>
+
+<span class="cmt"># after: a document addressable from anywhere on Earth</span>
+<span class="kw">http</span><span class="val">://</span><span class="str">info.cern.ch</span><span class="val">/hypertext/WWW/TheProject.html</span>
+
+<span class="cmt"># protocol  + host           + path</span>
+<span class="cmt"># how       + where          + what</span></code></pre>
+
+    <p>Vannevar Bush imagined traversing trails between documents in 1945. Ted Nelson named it hypertext in the 1960s. Both understood the same thing: <em>knowledge is only as powerful as its connections.</em> The URL made those connections possible at scale. <strong>Without the link, there is no Web. The URL is not a technical detail — it is the answer to the only question that mattered.</strong></p>
+
+    <div class="new-problem">Every document now has a universal address. But what format does the document arrive in — and can every machine read it?</div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <span class="level">STAGE_03 //</span>
+      <h2>THE DOCUMENT</h2>
+    </div>
+
+    <p>An address without a readable document is a door with nothing behind it. The machines at CERN ran different operating systems. A document formatted for one could not be read by another. Berners-Lee needed a format that any machine could parse, render, and follow — regardless of the system underneath.</p>
+
+    <p>The answer was HTML. Not invented from nothing — borrowed. SGML had been solving the document structure problem since the 1960s, used by publishers, defence contractors, and government institutions to define structured documents across incompatible systems. Berners-Lee took its core idea — <em>tags that describe meaning, not appearance</em> — and stripped it down to something a browser could render over a network. <strong>The Web is not a creation story. It is an inheritance story.</strong></p>
+
+    <p>An <code>&lt;h1&gt;</code> does not say "make this big." It says "this is the most important heading in this document." An <code>&lt;a href&gt;</code> does not say "show this in blue." It says "this document is connected to another — at this address." Meaning first. Appearance second. The distinction is not aesthetic. It is architectural.</p>
 
     <pre data-lang="html"><code><span class="tag">&lt;html&gt;</span>
   <span class="tag">&lt;head&gt;</span>
@@ -303,23 +330,28 @@ turtle.done()</pre>
   <span class="tag">&lt;/head&gt;</span>
   <span class="tag">&lt;body&gt;</span>
     <span class="tag">&lt;h1&gt;</span><span class="val">A system for sharing information across machines.</span><span class="tag">&lt;/h1&gt;</span>
-    <span class="tag">&lt;p&gt;</span><span class="val">Any machine. Any operating system. Same result.</span><span class="tag">&lt;/p&gt;</span>
-    <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"next.html"</span><span class="tag">&gt;</span><span class="val">Continue reading</span><span class="tag">&lt;/a&gt;</span>
+
+    <span class="cmt">&lt;!-- meaning: this document is connected to another --&gt;</span>
+    <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"http://info.cern.ch/next.html"</span><span class="tag">&gt;</span>
+      <span class="val">Continue reading — on a different machine</span>
+    <span class="tag">&lt;/a&gt;</span>
   <span class="tag">&lt;/body&gt;</span>
 <span class="tag">&lt;/html&gt;</span></code></pre>
 
-    <p>The isolation was broken. Documents were now reachable — in principle. But a document in Geneva still needed a way to travel to a machine in Tokyo. HTML solved the format. It did not solve the delivery.</p>
+    <p>Any machine. Any operating system. Same result. The isolation that Berners-Lee found at CERN was broken — not by a single invention, but by an inheritance from decades of prior work, finally assembled in one place.</p>
 
-    <div class="new-problem">We have a universal document format. Now — how does a machine request one across a network?</div>
+    <div class="new-problem">Documents have addresses. Documents have a universal format. But the network connecting them is heterogeneous — thousands of different machines, systems, and architectures. How do they request and deliver documents to each other?</div>
   </section>
 
   <section>
     <div class="section-header">
-      <span class="level">STAGE_03 //</span>
+      <span class="level">STAGE_04 //</span>
       <h2>THE RECEPTIONIST</h2>
     </div>
 
-    <p>Imagine a library. Every document humanity has ever written, stored inside. You are outside. You cannot enter. There is a receptionist at the door. You describe what you need. The receptionist searches. The receptionist returns with the document. <strong>HTTP is the language you and the receptionist speak.</strong></p>
+    <p>The network was not clean. Machines ran different operating systems, spoke different internal protocols, stored files in different ways. The URL told you <em>where</em> a document lived. HTML told you <em>what</em> it was. But nothing told two completely different machines <em>how</em> to negotiate the exchange. That is the problem HTTP solved.</p>
+
+    <p>Imagine a library. Every document humanity has ever written, stored inside. You are outside. You cannot enter. There is a receptionist at the door. You describe what you need. The receptionist searches. The receptionist returns with the document. <strong>HTTP is the language you and the receptionist speak — regardless of what system either of you runs underneath.</strong></p>
 
     <p>You never touch the shelves. You send a request. You receive a response. The receptionist does not remember your previous visit unless you remind them. That last sentence is not a detail — it is architecture.</p>
 
@@ -332,6 +364,8 @@ turtle.done()</pre>
 <span class="attr">Content-Type:</span> <span class="val">text/html</span>
 
 <span class="tag">&lt;html&gt;</span><span class="val">...</span><span class="tag">&lt;/html&gt;</span></code></pre>
+
+    <p>It is worth pausing here. HTTP did not arrive on an empty network. It ran on top of TCP/IP — a protocol suite that had been adopted across ARPANET and university networks through the 1970s and 80s. TCP/IP was not chosen because it was technically superior to every alternative. DECnet, IPX, AppleTalk, and the OSI model were all competing for the same ground. TCP/IP won because it was already there — already running on the machines that researchers used, already adopted broadly enough that abandoning it would cost more than its imperfections. <em>The best protocol does not always win. The protocol with the most connections wins.</em> This pattern will repeat itself throughout the history of the Web.</p>
 
     <p>Text. Over a wire. That is all it ever was. Every framework you have used — Django, Rails, Express — every single one ends here. Do not believe it?</p>
 
@@ -366,29 +400,7 @@ turtle.done()</pre>
 
     <p>Compile it. Open <code>localhost:8080</code>. Your browser — with its millions of lines of code — will render an <code>&lt;h1&gt;</code> served by 30 lines of C. The protocol has not changed since 1991. The complexity you work with every day is built entirely on top of this moment.</p>
 
-    <div class="new-problem">Requests and responses work. But every response is a static file. What if machines need to exchange structured data — not just human-readable pages?</div>
-  </section>
-
-  <section>
-    <div class="section-header">
-      <span class="level">STAGE_04 //</span>
-      <h2>SHOULDERS OF GIANTS</h2>
-    </div>
-
-    <p>Berners-Lee did not invent structure from nothing. He inherited it. Since the 1960s, publishers, defence contractors, and librarians had been solving the same problem — how do you describe a document's structure so that any system can process it? Their answer was SGML. The Web's answer was XML.</p>
-
-    <pre data-lang="xml"><code><span class="cmt">&lt;!-- HTML describes presentation --&gt;</span>
-<span class="tag">&lt;p&gt;</span><span class="val">Temperature: 36.6</span><span class="tag">&lt;/p&gt;</span>
-
-<span class="cmt">&lt;!-- XML describes meaning --&gt;</span>
-<span class="tag">&lt;measurement&gt;</span>
-  <span class="tag">&lt;type&gt;</span><span class="val">temperature</span><span class="tag">&lt;/type&gt;</span>
-  <span class="tag">&lt;value</span> <span class="attr">unit</span>=<span class="str">"celsius"</span><span class="tag">&gt;</span><span class="val">36.6</span><span class="tag">&lt;/value&gt;</span>
-<span class="tag">&lt;/measurement&gt;</span></code></pre>
-
-    <p>The Web is not a creation story. It is an <strong>inheritance story</strong>. RSS, SOAP, early web services, and eventually JSON all descend from this idea. The developer who knows this reads any new data format and immediately asks the only question that matters: <em>what problem does this solve that the previous format could not?</em></p>
-
-    <div class="new-problem">Machines can exchange structured data. But the page is still inert. The user can read — but cannot act. What if interaction is required?</div>
+    <div class="new-problem">Addresses work. Documents travel. But every response is a static file — the same document, every time, for every user. What if the page needs to respond to the person reading it?</div>
   </section>
 
   <section>
@@ -457,7 +469,7 @@ button.<span class="fn">addEventListener</span>(<span class="str">'click'</span>
 
   <section class="closing">
     <div class="section-header">
-      <span class="level">STAGE_08 //</span>
+      <span class="level">STAGE_07 //</span>
       <h2>BACK TO CERN</h2>
     </div>
 
