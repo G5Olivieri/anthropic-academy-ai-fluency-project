@@ -227,14 +227,40 @@
 
   <div class="easter-egg">
     <pre>
-import turtle
-t = turtle.Pen()
-t.speed(0); t.bgcolor("black"); t.color("#00ff41")
-for i in range(36):
-    for j in range(8):
-        t.forward(160 - j * 18)
-        t.right(60)
-    t.right(10)
+import turtle, math
+
+t = turtle.Turtle()
+t.speed(0)
+
+cx, cy = 0, 0
+spokes = 8
+rings = 5
+spoke_length = 150
+
+# draw spokes
+for i in range(spokes):
+    angle = math.radians(360 / spokes * i)
+    t.penup()
+    t.goto(cx, cy)
+    t.pendown()
+    t.goto(cx + spoke_length * math.cos(angle),
+           cy + spoke_length * math.sin(angle))
+
+# draw rings
+for r in range(1, rings + 1):
+    dist = spoke_length / rings * r
+    points = []
+    for i in range(spokes):
+        angle = math.radians(360 / spokes * i)
+        points.append((cx + dist * math.cos(angle),
+                        cy + dist * math.sin(angle)))
+    t.penup()
+    t.goto(points[0])
+    t.pendown()
+    for p in points[1:]:
+        t.goto(p)
+    t.goto(points[0])
+
 turtle.done()</pre>
   </div>
 
